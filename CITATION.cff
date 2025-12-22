@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - name: "Zhenchao Jin"
+title: "FreeGPTHub: A truly free, unified GPT API gateway—unlike “fake-free” alternatives that hide paywalls behind quotas, trials, or mandatory top-ups."
+date-released: 2025-12-22
+url: "https://github.com/CharlesPikachu/FreeGPTHub"
+license: Apache-2.0

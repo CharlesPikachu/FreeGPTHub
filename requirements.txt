@@ -1,0 +1,6 @@
+openai
+requests
+json_repair
+cryptography
+pyfreeproxy
+websocket-client
