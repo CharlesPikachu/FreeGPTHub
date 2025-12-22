@@ -22,14 +22,14 @@ QWEN_FREE_SHARED_KEYS = [
     '96q5jwtx1b-kNh6X-0m6OVB3yMIMIfQibrk3T7X6SGVlEJ_pHmKtB6CHq_inDKqg2MPRCoFtteqM3y1Y0RqX3Vcbeks5DPardB4JAw==', 
     '3RJVZBVB33R7elL8c7wFTSnwmnfSCwirGcUA1Xkku9xUtM4f78PNzCElAtjLhJ9ApVAh4JxjbVsdGMCcvvOepUT_1Q-Z1nmhfi4qQA=='
 ]
-QWEN_FREE_API_V4_KEYS = {
+QWEN_FREE_API_V1_KEYS = {
     'qwen-plus': QWEN_FREE_SHARED_KEYS, 'qwen3-max': QWEN_FREE_SHARED_KEYS, 'qwen-flash': QWEN_FREE_SHARED_KEYS, 'qwen-turbo': QWEN_FREE_SHARED_KEYS,
     'qwen-long': QWEN_FREE_SHARED_KEYS, 'qwen3-omni-flash': QWEN_FREE_SHARED_KEYS, 'qwen-math-plus': QWEN_FREE_SHARED_KEYS, 'qwen-math-turbo': QWEN_FREE_SHARED_KEYS,
     'qwen3-coder-plus': QWEN_FREE_SHARED_KEYS, 'qwen3-coder-flash': QWEN_FREE_SHARED_KEYS, 'qwen-mt-plus': QWEN_FREE_SHARED_KEYS, 'qwen-mt-flash': QWEN_FREE_SHARED_KEYS,
     'qwen-mt-lite': QWEN_FREE_SHARED_KEYS, 'qwen-mt-turbo': QWEN_FREE_SHARED_KEYS, 'qwen-doc-turbo': QWEN_FREE_SHARED_KEYS, 'qwen-deep-research': QWEN_FREE_SHARED_KEYS,
     'qwen3-vl-plus': QWEN_FREE_SHARED_KEYS, 'qwen3-vl-flash': QWEN_FREE_SHARED_KEYS, 'qwen-vl-max': QWEN_FREE_SHARED_KEYS, 'qwen-vl-ocr': QWEN_FREE_SHARED_KEYS,
 }
-QWEN_SCNET_FREE_API_KEYS = {
+QWEN_SCNET_FREE_API_V1_KEYS = {
     'Qwen3-30B-A3B': '9', 'Qwen3-235B-A22B': '120', 
 }
 
@@ -40,7 +40,7 @@ class AlibabaQwenEndpoints(BaseEndpoint):
     def __init__(self, **kwargs):
         super(AlibabaQwenEndpoints, self).__init__(**kwargs)
         TI2T = ModelIOType.create(inputs=[Modality.TEXT, Modality.IMAGE], outputs=[Modality.TEXT])
-        for ver in list(QWEN_FREE_API_V4_KEYS.keys()):
+        for ver in list(QWEN_FREE_API_V1_KEYS.keys()):
             self.registervariant(ver, io_supported=[ModelIOType.fromtag("T2T")] if '-vl-' not in ver else [ModelIOType.fromtag("T2T"), TI2T])
             self.registerapi(
                 version=ver, name="officialapiv1", io=ModelIOType.fromtag("T2T"), handler="officialapiv1",
@@ -49,7 +49,7 @@ class AlibabaQwenEndpoints(BaseEndpoint):
             if '-vl-' in ver: self.registerapi(
                 version=ver, name="visionofficialapiv1", io=TI2T, handler="visionofficialapiv1", priority=100, note='official api: https://dashscope.aliyuncs.com/compatible-mode/v1'
             )
-        for ver in list(QWEN_SCNET_FREE_API_KEYS.keys()):
+        for ver in list(QWEN_SCNET_FREE_API_V1_KEYS.keys()):
             self.registervariant(ver, io_supported=[ModelIOType.fromtag("T2T")])
             self.registerapi(
                 version=ver, name="scnetapiv1", io=ModelIOType.fromtag("T2T"), handler="scnetapiv1",
@@ -58,13 +58,13 @@ class AlibabaQwenEndpoints(BaseEndpoint):
     '''officialapiv1'''
     def officialapiv1(self, req: ChatRequest, request_overrides: dict = None, version: str = None) -> ChatResponse:
         return self.openaisdk(
-            base_url='https://dashscope.aliyuncs.com/compatible-mode/v1', candidate_api_keys=QWEN_FREE_API_V4_KEYS, api_family='client.chat.completions.create',
+            base_url='https://dashscope.aliyuncs.com/compatible-mode/v1', candidate_api_keys=QWEN_FREE_API_V1_KEYS, api_family='client.chat.completions.create',
             req=req, request_overrides=request_overrides, version=version
         )
     '''visionofficialapiv1'''
     def visionofficialapiv1(self, req: ChatRequest, request_overrides: dict = None, version: str = None) -> ChatResponse:
         return self.visionopenaisdk(
-            base_url='https://dashscope.aliyuncs.com/compatible-mode/v1', candidate_api_keys=QWEN_FREE_API_V4_KEYS, api_family='client.chat.completions.create',
+            base_url='https://dashscope.aliyuncs.com/compatible-mode/v1', candidate_api_keys=QWEN_FREE_API_V1_KEYS, api_family='client.chat.completions.create',
             req=req, request_overrides=request_overrides, version=version
         )
     '''scnetapiv1'''
@@ -86,7 +86,7 @@ class AlibabaQwenEndpoints(BaseEndpoint):
         for key in list(payload.keys()):
             if key in req.extra_payload: payload[key] = req.extra_payload[key]
         payload['content'] = req.text
-        payload['modelId'] = QWEN_SCNET_FREE_API_KEYS[version]
+        payload['modelId'] = QWEN_SCNET_FREE_API_V1_KEYS[version]
         # post request
         resp = self.session.post("https://www.scnet.cn/acx/chatbot/v1/chat/completion", headers=headers, json=payload, stream=True, cookies=cookies, **request_overrides)
         resp.raise_for_status()

@@ -21,7 +21,7 @@ from ..utils import resp2json, ChatRequest, ChatResponse, ModelIOType, SecretUti
 
 
 '''SETTINGS'''
-SPARK_FREE_APIV1_KEYS = {
+SPARK_FREE_API_KEYS = {
     'lite': [
         'BrQGpZuyF-r-aa8BsEcILHhyck6bRGmeW5tOjGlKwLNkKeU04juloTRFZP7GtRlDWcU4hPcHtTycdJfRfcktr1JWlj54hlfnTe7bbbKl-FprpUcj',
         'D9-CjAmX4ww-_QFr_s9BLQ1fHoq60aHZ46-ATnsHL4JeO5_0GeQeEKP9Di337RQ1n2VQz0U-MhNZcaMn7XN-v_MJDkhQ9zIONBCkstyOyvgRePzp', 
@@ -54,7 +54,7 @@ class IFLYTEKSparkEndpoints(BaseEndpoint):
     '''officialapiv1'''
     def officialapiv1(self, req: ChatRequest, request_overrides: dict = None, version: str = None) -> ChatResponse:
         return self.openaisdk(
-            base_url='https://spark-api-open.xf-yun.com/v1', candidate_api_keys=SPARK_FREE_APIV1_KEYS, api_family='client.chat.completions.create',
+            base_url='https://spark-api-open.xf-yun.com/v1', candidate_api_keys=SPARK_FREE_API_KEYS, api_family='client.chat.completions.create',
             req=req, request_overrides=request_overrides, version=version
         )
     '''officialapiv4'''
@@ -103,7 +103,7 @@ class IFLYTEKSparkEndpoints(BaseEndpoint):
         # _onclose
         def _onclose(ws, close_status_code, close_msg): pass
         # obtain api info
-        app_secret = random.choice(SPARK_FREE_APIV1_KEYS[version])
+        app_secret = random.choice(SPARK_FREE_API_KEYS[version])
         app_id = SecretUtils.b64decode(SecretUtils.decryptaesgcm(app_secret['app_id'], self.aes_gem_key))
         api_key = SecretUtils.b64decode(SecretUtils.decryptaesgcm(app_secret['api_key'], self.aes_gem_key))
         api_secret = SecretUtils.b64decode(SecretUtils.decryptaesgcm(app_secret['api_secret'], self.aes_gem_key))

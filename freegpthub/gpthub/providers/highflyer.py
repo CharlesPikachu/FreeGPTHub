@@ -16,7 +16,7 @@ DEEPSEEK_FREE_API_KEYS = {
         'iWSTxC-YSd4nupox9dX6Y4DeuEYHCvUrHRpsRbDDuQ9Ek2wG0eH8VjK-QvmHVTXhlthPqcvAfAPfmSIjSlQJ4x-ydYEqQdyKYCCqjQ==',
     ],
 }
-DEEPSEEK_ALIYUNCS_SHARED_KEYS = [
+DEEPSEEK_ALIYUNCS_FREE_SHARED_KEYS = [
     'eFCw8sVzThf5PlQAfGP6rEU-DWTz8h-OOUxuoPuzwMNHTcY9RwEljO87aqFXsa8v8NRZxIoNxJrWSLnipkMSQQLQi8dB85b7cpezFg==', 
     'L7XiMAoZGuVmbsWJ4mKoV7OySWFKl-ZM599F0-C_ZA3gQyj1TlB5L2fILq_l8hyonltIv53Bpk_xTWVJKWfRBmU3oyi0Msdr4ek-GQ==', 
     'VkS9va4uhcBBAMh8nJo0PhrLBl6H1BlLv4HQp1wpVZpYzz4qhhAH0ePOQaIJFEh7rgT3Y4pvgUnx5QrLmIN255sup3pcK5Tlk3l19Q==', 
@@ -25,9 +25,9 @@ DEEPSEEK_ALIYUNCS_SHARED_KEYS = [
     'oW1la7eBruvbYUSlO8q3tESc_FPGGoKKLxFXi12HfL1JVhF-c5ShfxNSY2qkKMsJwFI3ffzZ40QiYGOJqNgi2zagFyEKArhdGKRHeQ==', 
     'q50HVPVK5tBh0yq32a1-7xCxczVqyNIacwRPZy0OEUZYd4FDqW1B1ey9hAn4lVO3Rb7z8_nacbREU7eotkeFnQDhiWtFhP1UUS8Rag==',
 ]
-DEEPSEEK_ALIYUNCS_FREE_API_KEYS = {
-    'deepseek-v3': DEEPSEEK_ALIYUNCS_SHARED_KEYS, 'deepseek-r1': DEEPSEEK_ALIYUNCS_SHARED_KEYS, 'deepseek-v3.1': DEEPSEEK_ALIYUNCS_SHARED_KEYS,
-    'deepseek-v3.2': DEEPSEEK_ALIYUNCS_SHARED_KEYS, 'deepseek-v3.2-exp': DEEPSEEK_ALIYUNCS_SHARED_KEYS,
+DEEPSEEK_ALIYUNCS_FREE_API_V1_KEYS = {
+    'deepseek-v3': DEEPSEEK_ALIYUNCS_FREE_SHARED_KEYS, 'deepseek-r1': DEEPSEEK_ALIYUNCS_FREE_SHARED_KEYS, 'deepseek-v3.1': DEEPSEEK_ALIYUNCS_FREE_SHARED_KEYS,
+    'deepseek-v3.2': DEEPSEEK_ALIYUNCS_FREE_SHARED_KEYS, 'deepseek-v3.2-exp': DEEPSEEK_ALIYUNCS_FREE_SHARED_KEYS,
 }
 
 
@@ -42,7 +42,7 @@ class HighflyerDeepSeekEndpoints(BaseEndpoint):
                 version=ver, name="officialapi", io=ModelIOType.fromtag("T2T"), handler="officialapi",
                 priority=100, note='official api: https://api.deepseek.com'
             )
-        for ver in list(DEEPSEEK_ALIYUNCS_FREE_API_KEYS.keys()):
+        for ver in list(DEEPSEEK_ALIYUNCS_FREE_API_V1_KEYS.keys()):
             self.registervariant(ver, io_supported=[ModelIOType.fromtag("T2T")])
             self.registerapi(
                 version=ver, name="aliyuncsapiv1", io=ModelIOType.fromtag("T2T"), handler="aliyuncsapiv1",
@@ -57,6 +57,6 @@ class HighflyerDeepSeekEndpoints(BaseEndpoint):
     '''aliyuncsapiv1'''
     def aliyuncsapiv1(self, req: ChatRequest, request_overrides: dict = None, version: str = None) -> ChatResponse:
         return self.openaisdk(
-            base_url='https://dashscope.aliyuncs.com/compatible-mode/v1', candidate_api_keys=DEEPSEEK_ALIYUNCS_FREE_API_KEYS, api_family='client.chat.completions.create',
+            base_url='https://dashscope.aliyuncs.com/compatible-mode/v1', candidate_api_keys=DEEPSEEK_ALIYUNCS_FREE_API_V1_KEYS, api_family='client.chat.completions.create',
             req=req, request_overrides=request_overrides, version=version
         )
