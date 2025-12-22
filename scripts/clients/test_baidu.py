@@ -16,7 +16,5 @@ print(aes_gem_key)
 req = ChatRequest(text='5 * 9 = ?')
 # test all models
 qianfan_client = BaiduQianfanEndpoints(aes_gem_key=aes_gem_key)
-resp = qianfan_client.send(req=req, version='deepseek-v3')
-print(resp.text)
 resp = qianfan_client.send(req=req, version='ernie-4.0-turbo-8k')
 print(resp.text)

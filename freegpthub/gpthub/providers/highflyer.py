@@ -29,6 +29,12 @@ DEEPSEEK_ALIYUNCS_FREE_API_V1_KEYS = {
     'deepseek-v3': DEEPSEEK_ALIYUNCS_FREE_SHARED_KEYS, 'deepseek-r1': DEEPSEEK_ALIYUNCS_FREE_SHARED_KEYS, 'deepseek-v3.1': DEEPSEEK_ALIYUNCS_FREE_SHARED_KEYS,
     'deepseek-v3.2': DEEPSEEK_ALIYUNCS_FREE_SHARED_KEYS, 'deepseek-v3.2-exp': DEEPSEEK_ALIYUNCS_FREE_SHARED_KEYS,
 }
+DEEPSEEK_QIANFAN_FREE_SHARED_KEYS = [
+    'oiP1BpFuiPBfnyHJm9i5TAgwMZG3Y0Vd8UBqTmxaS2M7MNVHtz14eNsaOKa5n2T-2DDthiKYFZU25JAzlgUAECa4KIrn5s08Xete_El9TPTOTDPTvzsQaDpE-5JSrTYYrmPaWgmp7hYcfEIhYk9nsl62zhMcBLIk_7gXV9AXfb8=', 
+    'DTeSqHsTdBZthSJfrAR575nGNh4ZGNk0Jz-hU5YrMZicCeJuxUJDO9YJACGcTD9UQ60f41eYwv3Gl6okp7hT3LYHTClIApx_nsOSVty2_D-BViS9qTqkQuh-ZZZSZOfWrBtglkl7I03ZQW6o1bug3uq75HEjtBMeK-dWtQJTlvE=', 
+    'mHXHSnXsn562akeQfJDEvheYzdMtzVXuhLh-I8_NRjn5_yB0R8zGZpWaXM7rlN8SbL-kneABpK5FsMWWMm2X0ClHX3qqBjFGALf6EXzcpuIj6H2wcyklxHmn0i2AZnaGpxffSKuyoARrgY0lmokpMI0o_1OoxHbIeykhoyCW7R8='
+]
+DEEPSEEK_QIANFAN_FREE_API_V2_KEYS = {'deepseek-v3': DEEPSEEK_QIANFAN_FREE_SHARED_KEYS}
 
 
 '''HighflyerDeepSeekEndpoints'''
@@ -48,6 +54,12 @@ class HighflyerDeepSeekEndpoints(BaseEndpoint):
                 version=ver, name="aliyuncsapiv1", io=ModelIOType.fromtag("T2T"), handler="aliyuncsapiv1",
                 priority=10, note='thirdpart api: https://dashscope.aliyuncs.com/compatible-mode/v1'
             )
+        for ver in list(DEEPSEEK_QIANFAN_FREE_API_V2_KEYS.keys()):
+            self.registervariant(ver, io_supported=[ModelIOType.fromtag("T2T")])
+            self.registerapi(
+                version=ver, name="qianfanapiv2", io=ModelIOType.fromtag("T2T"), handler="qianfanapiv2",
+                priority=10, note='thirdpart api: https://qianfan.baidubce.com/v2'
+            )
     '''officialapi'''
     def officialapi(self, req: ChatRequest, request_overrides: dict = None, version: str = None) -> ChatResponse:
         return self.openaisdk(
@@ -58,5 +70,11 @@ class HighflyerDeepSeekEndpoints(BaseEndpoint):
     def aliyuncsapiv1(self, req: ChatRequest, request_overrides: dict = None, version: str = None) -> ChatResponse:
         return self.openaisdk(
             base_url='https://dashscope.aliyuncs.com/compatible-mode/v1', candidate_api_keys=DEEPSEEK_ALIYUNCS_FREE_API_V1_KEYS, api_family='client.chat.completions.create',
+            req=req, request_overrides=request_overrides, version=version
+        )
+    '''qianfanapiv2'''
+    def qianfanapiv2(self, req: ChatRequest, request_overrides: dict = None, version: str = None) -> ChatResponse:
+        return self.openaisdk(
+            base_url='https://qianfan.baidubce.com/v2', candidate_api_keys=DEEPSEEK_QIANFAN_FREE_API_V2_KEYS, api_family='client.chat.completions.create',
             req=req, request_overrides=request_overrides, version=version
         )
