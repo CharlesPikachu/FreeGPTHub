@@ -9,10 +9,13 @@ WeChat Official Account (微信公众号):
 from freegpthub.gpthub import HighflyerDeepSeekEndpoints, ChatRequest
 
 
+# aes_gem_key
+aes_gem_key = eval(open('aes_gem_key.txt', 'r').read().strip())
+print(aes_gem_key)
 # prepare questions for deepseek
 req = ChatRequest(text='5 * 9 = ?')
 # test all models
-deepseek_client = HighflyerDeepSeekEndpoints()
+deepseek_client = HighflyerDeepSeekEndpoints(aes_gem_key=aes_gem_key)
 resp = deepseek_client.send(req=req, version='deepseek-chat')
 print(resp.text)
 resp = deepseek_client.send(req=req, version='deepseek-v3')
