@@ -28,3 +28,5 @@ req = ChatRequest(text='Describe the image?', images=('https://raw.githubusercon
 chatgpt_client = OpenAIChatGPTEndpoints(aes_gem_key=aes_gem_key)
 resp = chatgpt_client.send(req=req, version='gpt-4o')
 print(resp.text)
+resp = chatgpt_client.send(req=req, version='gpt-5.1')
+print(resp.text)

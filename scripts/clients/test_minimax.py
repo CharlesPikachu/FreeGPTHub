@@ -22,3 +22,10 @@ resp = minimax_client.send(req=req, version='MiniMax-M1-456B')
 print(resp.text)
 resp = minimax_client.send(req=req, version='MiniMax-M2')
 print(resp.text)
+
+# test vision models
+req = ChatRequest(text='Describe the image?', images=('https://raw.githubusercontent.com/CharlesPikachu/FreeGPTHub/main/docs/dog.jpeg',))
+# test vision model
+minimax_client = MiniMaxEndpoints(aes_gem_key=aes_gem_key)
+resp = minimax_client.send(req=req, version='MiniMax-Text-01')
+print(resp.text)

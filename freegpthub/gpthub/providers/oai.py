@@ -34,6 +34,12 @@ CHATGPT_ANYWHERE_FREE_API_KEYS = {
 CHATGPT_BIANXIE_FREE_API_KEYS = {
     'gpt-4o': ['rXftowCdzp52RYbrejAJ17TkqTHqibdMBbaOsEbYLppnPONitvK7YqQQBcf9hWaiiv85TAgmWotshy4LOCqaBDn6ib10rOX9G4-jlq_qGQq3EZoRsMwsju0KEipRWRgK']
 }
+CHATGPT_GPTBESTVIP_FREE_API_KEYS = {
+    'gpt-4o-mini': ['S06SosGNrr-UaXY46KfjK-2sltumTl21BhuivUpdXp36ZDi7xnoCpebdmGHhTzpu_RZB6ZgBq0WfwPBJ45o9qH7GlrwZh43LD1eiPSgk0y2E1JreXxT20O3F2zx_0lqD'],
+    'gpt-4o': ['S06SosGNrr-UaXY46KfjK-2sltumTl21BhuivUpdXp36ZDi7xnoCpebdmGHhTzpu_RZB6ZgBq0WfwPBJ45o9qH7GlrwZh43LD1eiPSgk0y2E1JreXxT20O3F2zx_0lqD'],
+    'gpt-5.1': ['S06SosGNrr-UaXY46KfjK-2sltumTl21BhuivUpdXp36ZDi7xnoCpebdmGHhTzpu_RZB6ZgBq0WfwPBJ45o9qH7GlrwZh43LD1eiPSgk0y2E1JreXxT20O3F2zx_0lqD'],
+    'gpt-5.2': ['S06SosGNrr-UaXY46KfjK-2sltumTl21BhuivUpdXp36ZDi7xnoCpebdmGHhTzpu_RZB6ZgBq0WfwPBJ45o9qH7GlrwZh43LD1eiPSgk0y2E1JreXxT20O3F2zx_0lqD'],
+}
 
 
 '''OpenAIChatGPTEndpoints'''
@@ -50,6 +56,10 @@ class OpenAIChatGPTEndpoints(BaseEndpoint):
             self.registervariant(ver, io_supported=[T2T, TI2T])
             self.registerapi(version=ver, name="bianxieapiv1", io=T2T, handler="bianxieapiv1", priority=11, note='thirdpart api: https://api.bianxie.ai/v1')
             self.registerapi(version=ver, name="visionbianxieapiv1", io=TI2T, handler="visionbianxieapiv1", priority=11, note='thirdpart api: https://api.bianxie.ai/v1')
+        for ver in list(CHATGPT_GPTBESTVIP_FREE_API_KEYS.keys()):
+            self.registervariant(ver, io_supported=[T2T, TI2T])
+            self.registerapi(version=ver, name="gptbestvipapiv1", io=T2T, handler="gptbestvipapiv1", priority=11, note='thirdpart api: https://hk-api.gptbest.vip/v1')
+            self.registerapi(version=ver, name="visiongptbestvipapiv1", io=TI2T, handler="visiongptbestvipapiv1", priority=11, note='thirdpart api: https://hk-api.gptbest.vip/v1')
     '''chatanywhereapiv1'''
     def chatanywhereapiv1(self, req: ChatRequest, request_overrides: dict = None, version: str = None) -> ChatResponse:
         return self.openaisdk(
@@ -66,5 +76,17 @@ class OpenAIChatGPTEndpoints(BaseEndpoint):
     def visionbianxieapiv1(self, req: ChatRequest, request_overrides: dict = None, version: str = None) -> ChatResponse:
         return self.visionopenaisdk(
             base_url='https://api.bianxie.ai/v1', candidate_api_keys=CHATGPT_BIANXIE_FREE_API_KEYS, api_family='client.chat.completions.create',
+            req=req, request_overrides=request_overrides, version=version
+        )
+    '''gptbestvipapiv1'''
+    def gptbestvipapiv1(self, req: ChatRequest, request_overrides: dict = None, version: str = None) -> ChatResponse:
+        return self.openaisdk(
+            base_url='https://hk-api.gptbest.vip/v1', candidate_api_keys=CHATGPT_GPTBESTVIP_FREE_API_KEYS, api_family='client.chat.completions.create',
+            req=req, request_overrides=request_overrides, version=version
+        )
+    '''visiongptbestvipapiv1'''
+    def visiongptbestvipapiv1(self, req: ChatRequest, request_overrides: dict = None, version: str = None) -> ChatResponse:
+        return self.visionopenaisdk(
+            base_url='https://hk-api.gptbest.vip/v1', candidate_api_keys=CHATGPT_GPTBESTVIP_FREE_API_KEYS, api_family='client.chat.completions.create',
             req=req, request_overrides=request_overrides, version=version
         )
