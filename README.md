@@ -41,7 +41,7 @@
 
 # 📢 What's New
 
-- 2025-12-21: 
+- 2025-12-23: Released FreeGPTHub v0.1.0, adding support for ten endpoints.
 
 
 # 🤖 Introduction
@@ -67,16 +67,21 @@ In case of violation, the author reserves all rights to pursue legal action.
 
 # 🧩 Supported GPT Models
 
-| GPT Model (EN)                      |  GPT Model (CN)            | WeChat Article                                              | Core Code                                                                                                           |
-| :----:                              |  :----:                    | :----:                                                      | :----:                                                                                                              |
-| IFLYTEKSparkEndpoints               |  讯飞星火知识大模型        | [click]()                                                   | [iflytek.py](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/freegpthub/gpthub/providers/iflytek.py)         |
-| BaiduQianfanEndpoints               |  百度文心大模型            | [click]()                                                   | [baidu.py](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/freegpthub/gpthub/providers/baidu.py)             |
-| OpenAIGPTEndpoints                  |  OpenAI ChatGPT            | [click]()                                                   | [oai.py](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/freegpthub/gpthub/providers/oai.py)                 |
-| ZhipuGLMEndpoints                   |  智谱大模型                | [click]()                                                   | [zhipu.py](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/freegpthub/gpthub/providers/zhipu.py)             |
-| DeepSeekEndpoints                   |  幻方量化深度求索          | [click]()                                                   | [highflyer.py](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/freegpthub/gpthub/providers/highflyer.py)     |
-| DoubaoEndpoints                     |  字节豆包                  | [click]()                                                   | [bytedance.py](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/freegpthub/gpthub/providers/bytedance.py)     |
-| AlibabaQwenEndpoints                |  阿里通义千问              | [click]()                                                   | [alibaba.py](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/freegpthub/gpthub/providers/alibaba.py)         |
-| MiniMaxEndpoints                    |  稀宇科技MiniMax           | [click]()                                                   | [minimax.py](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/freegpthub/gpthub/providers/minimax.py)         |
+The models currently supported by FreeGPTHub are as follows:
+
+| GPT Model (EN)                      |  GPT Model (CN)                               | WeChat Article                                              | Core Code                                                                                                           |
+| :----:                              |  :----:                                       | :----:                                                      | :----:                                                                                                              |
+| IFLYTEKSparkEndpoints               |  讯飞星火知识大模型                           | [click]()                                                   | [iflytek.py](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/freegpthub/gpthub/providers/iflytek.py)         |
+| BaiduQianfanEndpoints               |  百度文心大模型                               | [click]()                                                   | [baidu.py](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/freegpthub/gpthub/providers/baidu.py)             |
+| OpenAIGPTEndpoints                  |  OpenAI ChatGPT                               | [click]()                                                   | [oai.py](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/freegpthub/gpthub/providers/oai.py)                 |
+| ZhipuGLMEndpoints                   |  智谱大模型                                   | [click]()                                                   | [zhipu.py](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/freegpthub/gpthub/providers/zhipu.py)             |
+| DeepSeekEndpoints                   |  幻方量化深度求索                             | [click]()                                                   | [highflyer.py](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/freegpthub/gpthub/providers/highflyer.py)     |
+| DoubaoEndpoints                     |  字节豆包                                     | [click]()                                                   | [bytedance.py](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/freegpthub/gpthub/providers/bytedance.py)     |
+| AlibabaQwenEndpoints                |  阿里通义千问                                 | [click]()                                                   | [alibaba.py](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/freegpthub/gpthub/providers/alibaba.py)         |
+| MiniMaxEndpoints                    |  稀宇科技MiniMax                              | [click]()                                                   | [minimax.py](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/freegpthub/gpthub/providers/minimax.py)         |
+| ModelScopeEndpoints                 |  魔搭社区开源模型 (DeepSeek, Qwen等)          | [click]()                                                   | [modelscope.py](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/freegpthub/gpthub/common/modelscope.py)      |
+
+Please note that the APIs in FreeGPTHub mainly rely on free endpoints scraped from the public internet, so their speed and stability cannot be guaranteed.
 
 
 # 📦 Install
