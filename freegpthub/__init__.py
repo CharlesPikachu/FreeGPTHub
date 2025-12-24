@@ -14,3 +14,7 @@ __email__ = 'charlesblwx@gmail.com'
 __license__ = 'Apache License 2.0'
 '''copyright'''
 __copyright__ = 'Copyright 2025-2030 Zhenchao Jin'
+
+
+'''init'''
+from .registered import REGISTERED_ENDPOINTS

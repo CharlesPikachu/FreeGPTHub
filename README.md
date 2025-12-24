@@ -41,7 +41,7 @@
 
 # 📢 What's New
 
-- 2025-12-23: Released FreeGPTHub v0.1.0, adding support for ten endpoints.
+- 2025-12-24: Released FreeGPTHub v0.1.0, adding support for nine endpoints.
 
 
 # 🤖 Introduction
@@ -101,6 +101,9 @@ python setup.py install
 
 
 # 🚀 Quick Start
+
+For security reasons, all free API keys collected by this project have been encrypted. 
+Therefore, if you’d like to use this project, please first follow the WeChat Official Account “Charles的皮卡丘”, then send the message “FreeGPTHub” via private chat in the backend to obtain the key.
 
 ```python
 from freegpthub.gpthub import ChatRequest, IFLYTEKSparkEndpoints
