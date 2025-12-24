@@ -18,3 +18,8 @@ __copyright__ = 'Copyright 2025-2030 Zhenchao Jin'
 
 '''init'''
 from .registered import REGISTERED_ENDPOINTS
+from .gpthub import (
+    ModelIOType, Modality, ChatRequest, ChatResponse, APISpec, ModelVariant, SecretUtils, StreamSanitizer,
+    BaseEndpoint, EndpointRegistry, IFLYTEKSparkEndpoints, BaiduQianfanEndpoints, OpenAIChatGPTEndpoints, ZhipuGLMEndpoints,
+    HighflyerDeepSeekEndpoints, ByteDanceDoubaoEndpoints, AlibabaQwenEndpoints, MiniMaxEndpoints, ModelScopeEndpoints,
+)

@@ -84,6 +84,13 @@ The models currently supported by FreeGPTHub are as follows:
 Please note that the APIs in FreeGPTHub mainly rely on free endpoints scraped from the public internet, so their speed and stability cannot be guaranteed.
 
 
+# 🧪 Playground
+
+Here are some projects built on top of FreeGPTHub,
+
+...
+
+
 # 📦 Install
 
 You have three installation methods to choose from,
@@ -109,22 +116,99 @@ You create a `ChatRequest`, pick an endpoint client, and call `send()`.
 > *For security reasons, all free API keys collected by this project have been encrypted.*
 > *Therefore, if you’d like to use this project, please first follow the WeChat Official Account “Charles的皮卡丘”, then send the message “FreeGPTHub” via private chat in the backend to obtain the key.*
 
+#### Supported Endpoint Clients (What you can import)
 
+The repository currently lists these endpoint clients:
+
+- `IFLYTEKSparkEndpoints`
+- `BaiduQianfanEndpoints`
+- `OpenAIGPTEndpoints`
+- `ZhipuGLMEndpoints`
+- `DeepSeekEndpoints`
+- `DoubaoEndpoints`
+- `AlibabaQwenEndpoints`
+- `MiniMaxEndpoints`
+- `ModelScopeEndpoints`
+
+You can switch providers by swapping the client class, while keeping the same `ChatRequest`.
+
+#### Your First Call (iFLYTEK Spark)
+
+This is the simplest “works-first” example from the repository.
 
 ```python
-from freegpthub.gpthub import ChatRequest, IFLYTEKSparkEndpoints
+from freegpthub import ChatRequest, IFLYTEKSparkEndpoints
 
-# prepare questions for spark
-req = ChatRequest(text='10 * 10 = ?')
-# thirdparty
-spark_client = IFLYTEKSparkEndpoints()
-resp = spark_client.send(req=req, version='thirdparty')
+# 1) prepare your request
+req = ChatRequest(text="10 * 10 = ?")
+# 2) create a client
+spark_client = IFLYTEKSparkEndpoints(aes_gem_key=xxx)
+# 3) call an endpoint version (provider-specific)
+resp = spark_client.send(req=req, version="lite")
 print(resp.text)
-# officialapiv1
-spark_client = IFLYTEKSparkEndpoints()
-resp = spark_client.send(req=req, version='lite')
+# 4) try another version
+resp = spark_client.send(req=req, version="4.0Ultra")
 print(resp.text)
 ```
+
+If you get errors about `aes_gem_key`, please first follow the WeChat Official Account “Charles的皮卡丘”, then send the message “FreeGPTHub” via private chat in the backend to obtain the `aes_gem_key`.
+
+Some paid models use the free credits from the accounts we created on the corresponding platforms. 
+If you see an error, it means those free credits have been exhausted. 
+You can switch to your own API key to continue using it.
+
+#### Switch Providers (Same Pattern)
+
+Example: ModelScope DeepSeek. The calling pattern is the same: create `ChatRequest`, create client, call `send()`.
+
+```python
+from freegpthub import ChatRequest, ModelScopeEndpoints
+
+req = ChatRequest(text="Explain gradient descent in 3 sentences.")
+client = ModelScopeEndpoints()
+resp = client.send(req=req, version="deepseek-ai/DeepSeek-R1-0528")
+print(resp.text)
+```
+
+#### Arguments & Data Structures (What they mean)
+
+This section explains the core objects used by FreeGPTHub, based on the actual implementation.
+
+- `ChatRequest` is the unified input object you pass into `endpoint.send(...)`. Fields:
+  - `text` (`str`): The user prompt (default `""`).
+  - `images` (`Tuple[Any, ...]`): Optional image inputs for vision-capable endpoints (default `()`).
+  - `openai` (`Dict[str, Any]`): Configuration for OpenAI SDK–style endpoints. You may pass `model` or `messages` here; if not provided, the library uses `version` as the model name and uses a default `messages=[{"role":"user","content": req.text}]`.
+  - `websocket` (`Dict[str, Any]`): Reserved for websocket-style endpoints (default `{"client": {}}`).
+  - `extra_payload` (`Dict[str, Any]`): Provider-specific extra payload (default `{}`).
+  - `meta` (`Dict[str, Any]`): Any metadata you want to carry for logging/debugging (default `{}`).
+  Minimal text-only request:  
+  ```python
+  from freegpthub.gpthub import ChatRequest
+  req = ChatRequest(text="10 * 10 = ?")
+  ```
+  Vision request example (bytes / url / (bytes,mime) are all accepted):
+  ```python
+  from freegpthub.gpthub import ChatRequest
+
+  req = ChatRequest(
+    text="Describe this image.",
+    images=(
+        "https://example.com/demo.png",
+        # open("demo.png", "rb").read(),
+        # (open("demo.jpg", "rb").read(), "image/jpeg"),
+    ),
+  )
+  ```
+
+- `ChatResponse`
+
+- `BaseEndpoint.send(req, api=None, version=None, request_overrides=None)`
+
+- `EndpointRegistry` (Discoverability) collects all endpoints and can:
+  - `listall()`: return `describe()` for every registered endpoint.
+  - `findvariantsbyio(io)`: find endpoints/versions supporting a given IO type (string tag like `"T2T"` or a `ModelIOType`).
+  - `get(provider, model)`: filter endpoints by provider/model.
+  In the project, `REGISTERED_ENDPOINTS` is pre-populated by registering multiple endpoint classes.
 
 
 # 🌟 Recommended Projects
