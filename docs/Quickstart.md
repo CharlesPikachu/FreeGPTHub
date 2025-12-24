@@ -143,8 +143,8 @@ Utilities you may see:
 
 In the current `BaseEndpoint.inferio(...)`, only `ChatRequest` is supported:
 
-- if `req.images` is empty: inferred IO is `T2T`
-- if `req.images` is non-empty: inferred IO is `TI2T`
+- if `req.images` is empty: inferred IO is `T2T`.
+- if `req.images` is non-empty: inferred IO is `TI2T`.
 
 #### `BaseEndpoint.send(req, api=None, version=None, request_overrides=None)`
 
