@@ -152,12 +152,9 @@ In the current `BaseEndpoint.inferio(...)`, only `ChatRequest` is supported:
 
 Arguments:
 
-- `req` (Any): In practice, a `ChatRequest`. The library infers its IO type via `inferio(req)`.
-- `version` (Optional[str]): Which *variant* to use.  
-  If omitted, it falls back to `self.default_version`.  
-  Must be registered in `self.variants`, otherwise `ValueError`.
-- `api` (Optional[str]): Force a specific API route (by name) within the chosen variant.  
-  If not provided, the endpoint automatically selects the highest-priority compatible API.
+- `req` (`Any`): In practice, a `ChatRequest`. The library infers its IO type via `inferio(req)`.
+- `version` (`Optional[str]`): Which *variant* to use. If omitted, it falls back to `self.default_version`. Must be registered in `self.variants`, otherwise `ValueError`.
+- `api` (`Optional[str]`): Force a specific API route (by name) within the chosen variant. If not provided, the endpoint automatically selects the highest-priority compatible API.
 - `request_overrides` (dict): Extra request options passed into the handler (implementation-specific).  
 
 #### `EndpointRegistry` (Discoverability)
