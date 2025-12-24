@@ -102,8 +102,14 @@ python setup.py install
 
 # 🚀 Quick Start
 
-For security reasons, all free API keys collected by this project have been encrypted. 
-Therefore, if you’d like to use this project, please first follow the WeChat Official Account “Charles的皮卡丘”, then send the message “FreeGPTHub” via private chat in the backend to obtain the key.
+FreeGPTHub provides a unified Python interface to call multiple LLM / MLLM endpoints via provider-specific `*Endpoints` clients.
+You create a `ChatRequest`, pick an endpoint client, and call `send()`.
+
+> **Notes:**
+> *For security reasons, all free API keys collected by this project have been encrypted.*
+> *Therefore, if you’d like to use this project, please first follow the WeChat Official Account “Charles的皮卡丘”, then send the message “FreeGPTHub” via private chat in the backend to obtain the key.*
+
+
 
 ```python
 from freegpthub.gpthub import ChatRequest, IFLYTEKSparkEndpoints
