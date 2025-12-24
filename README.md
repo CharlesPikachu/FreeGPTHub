@@ -180,7 +180,7 @@ This section explains the core objects used by FreeGPTHub, based on the actual i
   - `openai` (`Dict[str, Any]`): Configuration for OpenAI SDK–style endpoints. You may pass `model` or `messages` here; if not provided, the library uses `version` as the model name and uses a default `messages=[{"role":"user","content": req.text}]`.
   - `websocket` (`Dict[str, Any]`): Reserved for websocket-style endpoints (default `{"client": {}}`).
   - `extra_payload` (`Dict[str, Any]`): Provider-specific extra payload (default `{}`).
-  - `meta` (`Dict[str, Any]`): Any metadata you want to carry for logging/debugging (default `{}`).
+  - `meta` (`Dict[str, Any]`): Any metadata you want to carry for logging/debugging (default `{}`).  
   Minimal text-only request:  
   ```python
   from freegpthub.gpthub import ChatRequest
