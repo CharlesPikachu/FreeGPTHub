@@ -31,7 +31,7 @@
 </div>
 
 <p align="center">
-  📄 <strong><a href="" target="_blank">Documents: freegpthub.readthedocs.io</a></strong>
+  📄 <strong><a href="https://freegpthub.readthedocs.io/en/latest/" target="_blank">Documents: freegpthub.readthedocs.io</a></strong>
 </p>
 
 <p align="center">

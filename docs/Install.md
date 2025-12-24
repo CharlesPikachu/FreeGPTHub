@@ -1,4 +1,4 @@
-# Imagedl Installation
+# FreeGPTHub Installation
 
 #### Environment Requirements
 
