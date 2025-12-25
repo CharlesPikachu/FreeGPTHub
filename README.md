@@ -88,7 +88,9 @@ Please note that the APIs in FreeGPTHub mainly rely on free endpoints scraped fr
 
 Here are some projects built on top of FreeGPTHub,
 
-...
+|  Project (EN)                                                                              |   Project (CN)          |   WeChat Article                                             |  Project Location                                                                                                |
+|  :----:                                                                                    |   :----:                |   :----:                                                     |  :----:                                                                                                          |
+|  Your go-to terminal app for watching short dramas while "working"                         |   终端摸鱼看短剧神器    |   [click]()                                                  |  [drama_moyu](https://github.com/CharlesPikachu/FreeGPTHub/tree/main/playground/drama_moyu)                      |
 
 
 # 📦 Install
