@@ -298,7 +298,7 @@ def buildparser() -> argparse.ArgumentParser:
         "play_help": {"zh": "播放某部剧的某一集 (基于最近搜索结果 idx)", "en": "Play an episode (by idx from latest search)"},
         "resume_help": {"zh": "续播: 播放上次记录的下一集", "en": "Resume: play next episode from last record"},
         "binge_help": {"zh": "连播: 播放一段集数区间", "en": "Binge: play a range of episodes"},
-        "ai_help": {"zh": "AI 功能 (FreeGPTHub + GPT-4o-mini)", "en": "AI tools (FreeGPTHub + GPT-4o-mini)"},
+        "ai_help": {"zh": "AI 功能 (FreeGPTHub + MiniMaxEndpoints)", "en": "AI tools (FreeGPTHub + MiniMaxEndpoints)"},
         "suggest_help": {"zh": "AI: 根据历史搜索给关键词建议", "en": "AI: suggest keywords from your search history"},
         "rewrite_help": {"zh": "AI: 把口语需求改写为更好搜的关键词", "en": "AI: rewrite casual request into better search keywords"},
         "hook_help": {"zh": "AI: 给某部剧入坑集建议 (idx 来自最近搜索结果)", "en": "AI: recommend a good starting episode (idx from latest search)"},

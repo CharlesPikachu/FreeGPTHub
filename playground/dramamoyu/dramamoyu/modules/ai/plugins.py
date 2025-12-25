@@ -81,7 +81,7 @@ Disliked tag counts: {ctx.dislikes}
 
 Recent searches (up to 12): {ctx.recent_queries[:12]}
 """
-        return aslines(self.engine.run(prompt if self.lang == 'zh' else prompt_en, system=_BASE_SYSTEM if self.lang == 'zh' else _BASE_SYSTEM_EN, temperature=0.6, max_tokens=300))
+        return aslines(self.engine.run(prompt if self.lang == 'zh' else prompt_en, system=_BASE_SYSTEM if self.lang == 'zh' else _BASE_SYSTEM_EN, temperature=0.6))
     '''rewritequery'''
     def rewritequery(self, ctx: AIContext) -> str:
         prompt = f"""
@@ -110,7 +110,7 @@ User request: {ctx.user_text}
 
 Recent search references (up to 10): {ctx.recent_queries[:10]}
 """
-        return aslines(self.engine.run(prompt if self.lang == 'zh' else prompt_en, system=_BASE_SYSTEM if self.lang == 'zh' else _BASE_SYSTEM_EN, temperature=0.4, max_tokens=280))
+        return aslines(self.engine.run(prompt if self.lang == 'zh' else prompt_en, system=_BASE_SYSTEM if self.lang == 'zh' else _BASE_SYSTEM_EN, temperature=0.4))
     '''dedupdramas'''
     def dedupdramas(self, dramas: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         groups: Dict[str, List[Dict[str, Any]]] = {}
@@ -143,4 +143,4 @@ Title: {drama_title}
 Total episodes (optional): {total_eps}
 Episode details: {' | '.join([str(e) for e in eps])}
 """
-        return aslines(self.engine.run(prompt if self.lang == 'zh' else prompt_en, system=_BASE_SYSTEM if self.lang == 'zh' else _BASE_SYSTEM_EN, temperature=0.5, max_tokens=160))
+        return aslines(self.engine.run(prompt if self.lang == 'zh' else prompt_en, system=_BASE_SYSTEM if self.lang == 'zh' else _BASE_SYSTEM_EN, temperature=0.5))

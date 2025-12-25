@@ -9,8 +9,8 @@ WeChat Official Account (微信公众号):
 from __future__ import annotations
 import time
 from dataclasses import dataclass
+from freegpthub import MiniMaxEndpoints, ChatRequest
 from typing import Any, Dict, List, Optional, Protocol
-from freegpthub import OpenAIChatGPTEndpoints, ChatRequest
 
 
 '''AIContext'''
@@ -32,21 +32,21 @@ class LLM(Protocol):
 '''FreeGPTHubLLM'''
 class FreeGPTHubLLM:
     def __init__(self, aes_gem_key: Optional[str] = None, retries: int = 2, retry_backoff_sec: float = 1.2):
-        self.version = 'gpt-4o-mini'
+        self.version = 'MiniMax-M2'
         self.aes_gem_key = aes_gem_key
         self.retries = max(0, int(retries))
         self.retry_backoff_sec = float(retry_backoff_sec)
-        self.client = OpenAIChatGPTEndpoints(aes_gem_key=aes_gem_key)
+        self.client = MiniMaxEndpoints(aes_gem_key=aes_gem_key)
     '''complete'''
-    def complete(self, prompt: str, system: str | None = None, temperature: float = 0.6, max_tokens: int = 2048, **kwargs: Any) -> str:
+    def complete(self, prompt: str, system: str | None = None, temperature: float = 0.6, **kwargs: Any) -> str:
         messages: List[Dict[str, str]] = []
         if system: messages.append({"role": "system", "content": system})
         messages.append({"role": "user", "content": prompt})
-        openai_cfg: Dict[str, Any] = {"client.chat.completions.create": {"messages": messages, "temperature": temperature, "max_tokens": max_tokens}, "client": {}}
+        openai_cfg: Dict[str, Any] = {"client.chat.completions.create": {"messages": messages, "temperature": temperature}, "client": {}}
         openai_cfg.update(kwargs)
         req = ChatRequest(text=prompt, openai=openai_cfg)
         last_err: Optional[Exception] = None
-        resp = self.client.send(req=req, version=self.version, api='chatanywhereapiv1')
+        resp = self.client.send(req=req, version=self.version)
         for i in range(self.retries + 1):
             try:
                 resp = self.client.send(req=req, version=self.version)
