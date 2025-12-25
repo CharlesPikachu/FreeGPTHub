@@ -8,7 +8,7 @@ WeChat Official Account (微信公众号):
 GitHub:
     https://github.com/CharlesPikachu/videodl
 '''
-import videodl
+import dramamoyu as drama
 from setuptools import setup, find_packages
 
 
@@ -19,9 +19,9 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 '''setup'''
 setup(
-    name=videodl.__title__,
-    version=videodl.__version__,
-    description=videodl.__description__,
+    name=drama.__title__,
+    version=drama.__version__,
+    description=drama.__description__,
     long_description=long_description,
     long_description_content_type='text/markdown',
     classifiers=[
@@ -30,14 +30,13 @@ setup(
         'Intended Audience :: Developers',
         'Operating System :: OS Independent'
     ],
-    author=videodl.__author__,
-    url=videodl.__url__,
-    author_email=videodl.__email__,
-    license=videodl.__license__,
+    author=drama.__author__,
+    url=drama.__url__,
+    author_email=drama.__email__,
+    license=drama.__license__,
     include_package_data=True,
     packages=find_packages(),
-    package_data={"videodl": ["modules/js/youtube/*.js", "modules/js/xmflv/*.js", "modules/js/xmflv/xiami_token.wasm"]},
-    entry_points={'console_scripts': ['videodl = videodl.videodl:VideoClientCMD']},
+    entry_points={'console_scripts': ['dramamoyu = dramamoyu.cli:main']},
     install_requires=[lab.strip('\n') for lab in list(open('requirements.txt', 'r').readlines())],
     zip_safe=True,
 )
