@@ -6,7 +6,7 @@ Author:
 WeChat Official Account (微信公众号):
     Charles的皮卡丘
 GitHub:
-    https://github.com/CharlesPikachu/videodl
+    https://github.com/CharlesPikachu/FreeGPTHub/tree/main/playground/dramamoyu
 '''
 import dramamoyu as drama
 from setuptools import setup, find_packages
