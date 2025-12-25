@@ -2,7 +2,7 @@
 
 终端摸鱼看短剧神器
 
-[English Version → README_EN.md](README_EN.md)
+[English Version → README_EN.md](https://github.com/CharlesPikachu/FreeGPTHub/blob/main/playground/dramamoyu/README_EN.md)
 
 ---
 

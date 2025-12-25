@@ -5,7 +5,7 @@ __description__ = 'DramaMoyu: Your go-to terminal app for watching short dramas 
 '''url'''
 __url__ = 'https://github.com/CharlesPikachu/FreeGPTHub/tree/main/playground/dramamoyu'
 '''version'''
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 '''author'''
 __author__ = 'Zhenchao Jin'
 '''email'''
