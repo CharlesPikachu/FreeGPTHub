@@ -209,9 +209,10 @@ def aictx(store: PklStore, user_text: str = "", candidates: Optional[List[Dict[s
 
 
 '''cmdaisuggest'''
-def cmdaisuggest(args: argparse.Namespace, store: PklStore, aes_gem_key: bytes) -> int:
+def cmdaisuggest(args: argparse.Namespace, store: PklStore) -> int:
+    aes_gem_key = eval(open(args.aesgemkey, 'r').read().strip())
     engine = AIEngine(FreeGPTHubLLM(aes_gem_key=aes_gem_key))
-    svc = AIServices(engine)
+    svc = AIServices(engine, lang=LANGUAGE)
     ctx = aictx(store)
     out = svc.suggestkeywords(ctx, mood=args.mood or "", avoid=args.avoid or "", n=args.n)
     rprint(out)
@@ -219,9 +220,10 @@ def cmdaisuggest(args: argparse.Namespace, store: PklStore, aes_gem_key: bytes) 
 
 
 '''cmdairewrite'''
-def cmdairewrite(args: argparse.Namespace, store: PklStore, aes_gem_key: bytes) -> int:
+def cmdairewrite(args: argparse.Namespace, store: PklStore) -> int:
+    aes_gem_key = eval(open(args.aesgemkey, 'r').read().strip())
     engine = AIEngine(FreeGPTHubLLM(aes_gem_key=aes_gem_key))
-    svc = AIServices(engine)
+    svc = AIServices(engine, lang=LANGUAGE)
     ctx = aictx(store, user_text=args.text)
     out = svc.rewritequery(ctx)
     rprint(out)
@@ -229,7 +231,8 @@ def cmdairewrite(args: argparse.Namespace, store: PklStore, aes_gem_key: bytes) 
 
 
 '''cmdaihook'''
-def cmdaihook(args: argparse.Namespace, store: PklStore, aes_gem_key: bytes) -> int:
+def cmdaihook(args: argparse.Namespace, store: PklStore) -> int:
+    aes_gem_key = eval(open(args.aesgemkey, 'r').read().strip())
     dramas = store.getlastdramas()
     if not dramas: rprint('No recent search results, please run "search" first') if LANGUAGE == 'en' else rprint('没有最近搜索结果, 请先 "search"'); return 1
     idx = ((args.idx - 1) if args.idx > 0 else args.idx) % (len(dramas))
@@ -237,7 +240,7 @@ def cmdaihook(args: argparse.Namespace, store: PklStore, aes_gem_key: bytes) -> 
     provider: Provider = ProviderBulder.REGISTERED_MODULES[drama.engine]()
     eps_light = ensureepisodes(store, drama, provider)
     engine = AIEngine(FreeGPTHubLLM(aes_gem_key=aes_gem_key))
-    svc = AIServices(engine)
+    svc = AIServices(engine, lang=LANGUAGE)
     out = svc.hookepisode(drama.title, drama.total_eps, eps_light)
     rprint(out)
     return 0
@@ -287,12 +290,15 @@ def buildparser() -> argparse.ArgumentParser:
         "state": {
             "zh": "pkl 状态文件路径 (默认: ~/.drama_moyu_state.pkl)", "en": "Path to pkl state file (Default: ~/.drama_moyu_state.pkl)",
         },
+        "aesgemkey": {
+            "zh": "AES GEM KEY PATH, 使用AI功能时引入FreeGPTHub需要的密钥路径, 例如: aes_gem_key.txt", "en": "AES GEM KEY PATH, the key path required to integrate FreeGPTHub when using the AI features, e.g., aes_gem_key.txt"
+        },
         "search_help": {"zh": "搜索短剧 (剧层级)", "en": "Search dramas (series-level)"},
         "eps_help": {"zh": "获取某部剧的集列表 (基于最近搜索结果 idx)", "en": "List episodes (by idx from latest search)"},
         "play_help": {"zh": "播放某部剧的某一集 (基于最近搜索结果 idx)", "en": "Play an episode (by idx from latest search)"},
         "resume_help": {"zh": "续播: 播放上次记录的下一集", "en": "Resume: play next episode from last record"},
         "binge_help": {"zh": "连播: 播放一段集数区间", "en": "Binge: play a range of episodes"},
-        "ai_help": {"zh": "AI 功能 (FreeGPTHub + GLM4.5)", "en": "AI tools (FreeGPTHub + GLM4.5)"},
+        "ai_help": {"zh": "AI 功能 (FreeGPTHub + GPT-4o-mini)", "en": "AI tools (FreeGPTHub + GPT-4o-mini)"},
         "suggest_help": {"zh": "AI: 根据历史搜索给关键词建议", "en": "AI: suggest keywords from your search history"},
         "rewrite_help": {"zh": "AI: 把口语需求改写为更好搜的关键词", "en": "AI: rewrite casual request into better search keywords"},
         "hook_help": {"zh": "AI: 给某部剧入坑集建议 (idx 来自最近搜索结果)", "en": "AI: recommend a good starting episode (idx from latest search)"},
@@ -303,6 +309,7 @@ def buildparser() -> argparse.ArgumentParser:
     # --root
     p.add_argument("--engine", default=DEFAULT_ENGINE, choices=list(ProviderBulder.REGISTERED_MODULES.keys()), help=T("engine"))
     p.add_argument("--state", default=None, help=T("state"))
+    p.add_argument("--aesgemkey", default="./aes_gem_key.txt", help=T("aesgemkey"))
     sp = p.add_subparsers(dest="cmd", required=True)
     # --search
     s = sp.add_parser("search", help=T("search_help"))
@@ -318,7 +325,7 @@ def buildparser() -> argparse.ArgumentParser:
     pl = sp.add_parser("play", help=T("play_help"))
     pl.add_argument("idx", type=int)
     pl.add_argument("--ep", type=int, required=True)
-    pl.add_argument("--vo", default=None, help="mpv vo (e.g., tct/caca / leave empty for default)" if LANGUAGE == "en" else "mpv vo（如 tct/caca/默认不填）")
+    pl.add_argument("--vo", default=None, help="mpv vo (e.g., tct/caca / leave empty for default)" if LANGUAGE == "en" else "mpv vo (如 tct/caca, 默认不填)")
     pl.set_defaults(fn=cmdplay)
     # --resume
     rs = sp.add_parser("resume", help=T("resume_help"))

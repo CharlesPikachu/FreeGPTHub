@@ -20,6 +20,13 @@ _BASE_SYSTEM = """你是一个“短剧摸鱼助手”, 专门帮用户生成可
 - 如需结构化输出，严格遵守用户要求的格式;
 - 默认中文输出。
 """
+_BASE_SYSTEM_EN = """You are a "Short-Drama Slack-Off Assistant", specialized in helping users generate keyword combinations that can be directly used to search for short dramas, and can also handle request rewriting, deduplication, time-limited watching plans, and entry-episode recommendations, etc.
+Requirements:
+- The output should be short, copyable, and directly usable for search;
+- Do not output long explanatory paragraphs;
+- If structured output is needed, strictly follow the user-required format;
+- Default output in English.
+"""
 
 
 '''aslines'''
@@ -37,7 +44,8 @@ def localtitlenorm(t: str) -> str:
 
 '''AIServices'''
 class AIServices:
-    def __init__(self, engine: AIEngine):
+    def __init__(self, engine: AIEngine, lang: str = 'zh'):
+        self.lang = lang
         self.engine = engine
     '''suggestkeywords'''
     def suggestkeywords(self, ctx: AIContext, mood: str = "", avoid: str = "", n: int = 8) -> str:
@@ -57,7 +65,23 @@ class AIServices:
 
 最近搜索(最多12条): {ctx.recent_queries[:12]}
 """
-        return aslines(self.engine.run(prompt, system=_BASE_SYSTEM, temperature=0.6, max_tokens=300))
+        prompt_en = f"""
+Based on the user's preferences and search history, generate {n} "short-drama search keyword strings" (one per line). Each suggestion should include:
+Genre/relationship + character archetype tags + emotion/pacing + "feel-good" hook keywords (e.g., revenge / comeback / sweet romance / high-energy twists / power fantasy / chasing-wife-crematorium, etc.).
+Constraints:
+- Each line must be no more than 18 Chinese characters (spaces count);
+- No numbering, no explanations, no excessive punctuation;
+- Must avoid the user's deal-breakers.
+
+User mood (optional): {mood}
+To avoid (optional): {avoid}
+
+Liked tag counts: {ctx.likes}
+Disliked tag counts: {ctx.dislikes}
+
+Recent searches (up to 12): {ctx.recent_queries[:12]}
+"""
+        return aslines(self.engine.run(prompt if self.lang == 'zh' else prompt_en, system=_BASE_SYSTEM if self.lang == 'zh' else _BASE_SYSTEM_EN, temperature=0.6, max_tokens=300))
     '''rewritequery'''
     def rewritequery(self, ctx: AIContext) -> str:
         prompt = f"""
@@ -73,7 +97,20 @@ class AIServices:
 
 最近搜索参考(最多10条): {ctx.recent_queries[:10]}
 """
-        return aslines(self.engine.run(prompt, system=_BASE_SYSTEM, temperature=0.4, max_tokens=280))
+        prompt_en = f"""
+Rewrite the user's casual request into short-drama keywords that are easier to search.
+Strictly output the following format (one field per line; do not change the field names):
+Main query: ...
+Alternative 1: ...
+Alternative 2: ...
+Alternative 3: ...
+Filter: ... (write Empty if none)
+
+User request: {ctx.user_text}
+
+Recent search references (up to 10): {ctx.recent_queries[:10]}
+"""
+        return aslines(self.engine.run(prompt if self.lang == 'zh' else prompt_en, system=_BASE_SYSTEM if self.lang == 'zh' else _BASE_SYSTEM_EN, temperature=0.4, max_tokens=280))
     '''dedupdramas'''
     def dedupdramas(self, dramas: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         groups: Dict[str, List[Dict[str, Any]]] = {}
@@ -95,33 +132,15 @@ class AIServices:
 总集数(可空): {total_eps}
 每集详情: {' | '.join([str(e) for e in eps])}
 """
-        return aslines(self.engine.run(prompt, system=_BASE_SYSTEM, temperature=0.5, max_tokens=160))
-    '''pomodoroplan'''
-    def pomodoroplan(self, drama_title: str, total_eps: int | None, eps: list, time_limit_min: int = 15) -> str:
-        prompt = f"""
-用户只有 {time_limit_min} 分钟摸鱼。给一个观看策略: 看哪些集最划算 (最多 3 集)。
-严格输出格式:
-策略: ...
-清单:
-1) 第X集 | 理由(<=12字)
-2) 第X集 | 理由(<=12字)
-3) 第X集 | 理由(<=12字)
-提醒: 一句伪装成工作的提醒(<=16字)
+        prompt_en = f"""
+Give an "entry episode" suggestion for this short drama: which episode is the easiest to get hooked from? Provide 1 main suggestion and 2 alternatives.
+Strict output format:
+Main entry: Episode X | One-line reason (<=12 chars)
+Alt 1: Episode X | One-line reason (<=12 chars)
+Alt 2: Episode X | One-line reason (<=12 chars)
 
-剧名：{drama_title}
-总集数(可空): {total_eps}
-每集详情: {' | '.join([str(e) for e in eps])}
+Title: {drama_title}
+Total episodes (optional): {total_eps}
+Episode details: {' | '.join([str(e) for e in eps])}
 """
-        return aslines(self.engine.run(prompt, system=_BASE_SYSTEM, temperature=0.5, max_tokens=220))
-    '''stealthtitles'''
-    def stealthtitles(self, titles: List[str], style: str = "trainlog") -> List[str]:
-        out: List[str] = []
-        for i, _ in enumerate(titles, 1):
-            if style == "trainlog": out.append(f"Epoch {i}/200 | loss=0.{(i*7)%100:02d} | val_auc=0.{(80+i)%100:02d} | step={(i*120)%9999}")
-            elif style == "build": out.append(f"[build] target_{i} ✔ (0.{(i*13)%100:02d}s)")
-            elif style == "docs": out.append(f"[doc] section_{i} updated ✔")
-            else: out.append(f"[log] task_{i}: running...")
-        return out
-    '''bosskeymessage'''
-    def bosskeymessage(self) -> str:
-        return "(隐身中) 正在检查训练日志与系统状态... ✔"
+        return aslines(self.engine.run(prompt if self.lang == 'zh' else prompt_en, system=_BASE_SYSTEM if self.lang == 'zh' else _BASE_SYSTEM_EN, temperature=0.5, max_tokens=160))
