@@ -11,15 +11,15 @@ You create a `ChatRequest`, pick an endpoint client, and call `send()`.
 
 The repository currently lists these endpoint clients:
 
-- `IFLYTEKSparkEndpoints`
+- `AlibabaQwenEndpoints`
 - `BaiduQianfanEndpoints`
-- `OpenAIGPTEndpoints`
-- `ZhipuGLMEndpoints`
 - `DeepSeekEndpoints`
 - `DoubaoEndpoints`
-- `AlibabaQwenEndpoints`
+- `IFLYTEKSparkEndpoints`
 - `MiniMaxEndpoints`
 - `ModelScopeEndpoints`
+- `OpenAIGPTEndpoints`
+- `ZhipuGLMEndpoints`
 
 You can switch providers by swapping the client class, while keeping the same `ChatRequest`.
 
