@@ -33,5 +33,5 @@ class Drama:
     tags: str = ""
     total_eps: Optional[int] = None
     episodes: List[Episode] = field(default_factory=list)
-    engine: str = "HongGuoProvider"
+    engine: str = "WeiGuanProvider"
     extra: Dict[str, Any] = field(default_factory=dict)

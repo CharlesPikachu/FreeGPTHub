@@ -40,14 +40,25 @@ class BaseProvider():
     def getplayurl(self, drama: Drama, ep: Episode) -> str:
         raise NotImplementedError
     '''saferequestsget'''
-    def saferequestsget(self, params: Dict[str, Any], requests_overrides: dict = None):
+    def saferequestsget(self, params: Dict[str, Any], requests_overrides: dict = None, suffix: str = ""):
         requests_overrides, raw = requests_overrides or {}, {}
         for api_url in self.api_urls:
             try:
-                resp = self.session.get(api_url, params=params, timeout=15, **requests_overrides)
+                resp = self.session.get(api_url + suffix, params=params, timeout=15, **requests_overrides)
                 resp.raise_for_status()
                 raw = resp.json()
-                if isinstance(raw, dict) and raw.get("code") not in (None, 200): raise RuntimeError(raw.get('msg'))
+                break
+            except:
+                continue
+        return raw
+    '''saferequestspost'''
+    def saferequestspost(self, json: Dict[str, Any] = None, data: Dict[str, Any] = None, requests_overrides: dict = None, suffix: str = ""):
+        requests_overrides, raw, json, data = requests_overrides or {}, {}, json or {}, data or {}
+        for api_url in self.api_urls:
+            try:
+                resp = self.session.post(api_url + suffix, data=data, json=json, timeout=15, **requests_overrides)
+                resp.raise_for_status()
+                raw = resp.json()
                 break
             except:
                 continue

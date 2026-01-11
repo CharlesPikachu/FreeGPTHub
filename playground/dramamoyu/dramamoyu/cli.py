@@ -21,7 +21,7 @@ except:
 
 
 '''settings'''
-DEFAULT_ENGINE = "HongGuoProvider"
+DEFAULT_ENGINE = "WeiGuanProvider"
 LANGUAGE = ["zh", "en"][0]
 
 
@@ -72,7 +72,7 @@ def showepisodes(episodes: List[Dict[str, Any]], progress: int = 0) -> None:
 def dramafromlight(d: Dict[str, Any]) -> Drama:
     return Drama(
         id=str(d["id"]), title=str(d.get("title", "")), desc=str(d.get("desc", "")), cover=str(d.get("cover", "")), tags=str(d.get("tags", "")),
-        total_eps=(int(d["total_eps"]) if d.get("total_eps") not in (None, "") else None), engine=str(d.get("engine", "HongGuoProvider")), extra=d.get("extra") or {},
+        total_eps=(int(d["total_eps"]) if d.get("total_eps") not in (None, "") else None), engine=str(d.get("engine", DEFAULT_ENGINE)), extra=d.get("extra") or {},
     )
 
 
@@ -285,7 +285,7 @@ def buildparser() -> argparse.ArgumentParser:
             "en": "Terminal short-drama bingeing (for sneaky breaks): multi-episode playback + selectable search engines + AI-powered search assistant",
         },
         "engine": {
-            "zh": "搜索引擎 (默认: HongGuoProvider)", "en": "Search engine (Default: HongGuoProvider)",
+            "zh": "搜索引擎 (默认: WeiGuanProvider)", "en": "Search engine (Default: WeiGuanProvider)",
         },
         "state": {
             "zh": "pkl 状态文件路径 (默认: ~/.drama_moyu_state.pkl)", "en": "Path to pkl state file (Default: ~/.drama_moyu_state.pkl)",
