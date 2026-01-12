@@ -67,10 +67,6 @@ class BaiDuProvider(BaseProvider):
         if ep.play_url: return ep.play_url
         try:
             ep_details = self.saferequestsget(params={"video_id": ep.video_id})
-            ep.title = ep_details['data']['title']
-            ep.duration_sec = ep_details['data']['duration']
-            ep.play_url = ep_details['data']['qualities'][-1]['download_url']
-            ep.extra = ep_details
-            return ep.play_url
+            return ep_details['data']['qualities'][-1]['download_url']
         except:
             raise RuntimeError("Fail to fetch play url.")
