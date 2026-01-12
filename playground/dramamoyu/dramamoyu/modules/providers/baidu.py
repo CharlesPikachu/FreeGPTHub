@@ -55,7 +55,7 @@ class BaiDuProvider(BaseProvider):
             it['ep_details'] = ep_details
             epno = i + 1
             eps.append(Episode(
-                ep=epno, title=f'第{epno}集 {replace_title_func(it.get("title", ""))}', duration_sec=ep_details['data']['duration'], play_url=ep_details['data']['qualities'][-1]['download_url'], video_id=it['video_id'], extra=it,
+                ep=epno, title=f'{replace_title_func(it.get("title", ""))} 第{epno}集', duration_sec=ep_details['data']['duration'], play_url=ep_details['data']['qualities'][-1]['download_url'], video_id=it['video_id'], extra=it,
             ))
         # return
         drama.author = drama.author or ep_details['data']['author']['name'] or ""

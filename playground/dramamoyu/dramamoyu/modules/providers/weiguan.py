@@ -57,7 +57,7 @@ class WeiGuanProvider(BaseProvider):
             epno = sort if sort is not None else (i + 1)
             play_settings = json_repair.loads(it['playSetting'])
             eps.append(Episode(
-                ep=epno, title=f'第{epno}集 {it.get("title", "")}', duration_sec=it.get("playLength"), play_url=play_settings.get("super") or play_settings.get("high") or play_settings.get("normal"), video_id=it.get("episodeOneId") or f"{drama.id}-{epno}", extra=it,
+                ep=epno, title=f'{it.get("title", "")} 第{epno}集', duration_sec=it.get("playLength"), play_url=play_settings.get("super") or play_settings.get("high") or play_settings.get("normal"), video_id=it.get("episodeOneId") or f"{drama.id}-{epno}", extra=it,
             ))
         # return
         drama.total_eps = drama.total_eps or len(eps)

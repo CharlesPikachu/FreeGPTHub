@@ -28,6 +28,7 @@ Great for slacking off during research / at work / over SSH on a server.
 - Multiple search engines
   - WeiGuan Short Drama (default)
   - BaiDu Short Drama
+  - HeMa Short Drama
 - Multi-episode short drama support
   - Search returns “dramas”
   - Each drama contains multiple episodes
