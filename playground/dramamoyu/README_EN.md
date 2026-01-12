@@ -27,6 +27,7 @@ Great for slacking off during research / at work / over SSH on a server.
 
 - Multiple search engines
   - WeiGuan Short Drama (default)
+  - QiMao Short Drama
   - BaiDu Short Drama
   - HongGuo Short Drama
   - HeMa Short Drama
