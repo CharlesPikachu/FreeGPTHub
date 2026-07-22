@@ -318,7 +318,13 @@ If you use this project in your research, please cite the repository,
 
 # ⭐️ Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=CharlesPikachu/FreeGPTHub&type=date&legend=top-left)](https://www.star-history.com/#CharlesPikachu/FreeGPTHub&type=date&legend=top-left)
+<a href="https://www.star-history.com/?type=date&legend=top-left&repos=CharlesPikachu%2FFreeGPTHub">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=CharlesPikachu/FreeGPTHub&type=date&theme=dark&legend=top-left&sealed_token=khcLVBGsI9QL_k8Fx8tZ1HXRgevSLQJyqQt2mKJeFkDiaci9EjaBYquUMIYwGFHW_RQTppVKs6qXP12LjXrvS4RFL_AN1fUP_1aSWrgjSySrq8QnOxGGUg" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=CharlesPikachu/FreeGPTHub&type=date&legend=top-left&sealed_token=khcLVBGsI9QL_k8Fx8tZ1HXRgevSLQJyqQt2mKJeFkDiaci9EjaBYquUMIYwGFHW_RQTppVKs6qXP12LjXrvS4RFL_AN1fUP_1aSWrgjSySrq8QnOxGGUg" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=CharlesPikachu/FreeGPTHub&type=date&legend=top-left&sealed_token=khcLVBGsI9QL_k8Fx8tZ1HXRgevSLQJyqQt2mKJeFkDiaci9EjaBYquUMIYwGFHW_RQTppVKs6qXP12LjXrvS4RFL_AN1fUP_1aSWrgjSySrq8QnOxGGUg" />
+ </picture>
+</a>
 
 
 # 💖 Appreciation (赞赏 / 打赏)
